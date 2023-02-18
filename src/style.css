@@ -7,13 +7,28 @@ body {
     background: linear-gradient(to right, rgb(9, 143, 114), rgb(204, 240, 238));
 }
 
-.calculator-grid{
+.calculator-grid {
     display: grid;
     margin-top: 2rem;
     grid-template-columns: repeat(4, 6rem);
     grid-template-rows: minmax(7rem, auto) repeat(5, 6rem);
 }
 
-.span-two{
+.span-two {
     grid-column: span 2;
+}
+
+.output {
+    grid-column: 1 / -1;
+    background-color: rgba(35, 73, 48, 0.55);
+    display: flex;
+}
+
+.output .prev-operand {
+    color: rgba(255, 255, 255, .75);
+}
+
+.output .curr-operand {
+    color: white;
+    font-size: 2.5rem;
 }
