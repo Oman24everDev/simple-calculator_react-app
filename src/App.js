@@ -2,7 +2,7 @@ import { useReducer } from "react";
 import DigitButton from "./ButtonDigits";
 import "./style.css";
 
-
+// export to call in ButtonDigits.js file 
 export const ACTIONS = {
   ADD_DIGIT: 'add-digit',
   DELETE_DIGIT: 'delete-digit',
@@ -23,12 +23,13 @@ function reducer(state, { type, payload }) {
 
 function App() {
 
+  // this array of variables will be passed on divs or dispatch
   const [ {currOperand, prevOperand, operation}, dispatch ] = useReducer(reducer, {})
 
   return (
     <div className="calculator-grid">
       <div className="output">
-        <div className="prev-operand"> {prevOperand} {operation}</div>
+        <div className="prev-operand"> {prevOperand} {operation}</div> 
         <div className="curr-operand">{currOperand}</div>
       </div>
       <button className="span-two">AC</button>
