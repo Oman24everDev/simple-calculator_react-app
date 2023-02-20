@@ -17,6 +17,16 @@ function reducer(state, { type, payload }) {      // ...state = object/property
 
     // this case action is for concat the digits & validations to limit the 0 or . for not duplicating
     case ACTIONS.ADD_DIGIT:
+      // this if statement is for checking if the value of the output is not from = button
+      // to not overwrite it 
+      if (state.overwrite) {
+        return {
+          ...state,
+          currOperand: payload.digit,
+          overwrite: false
+        }
+      }
+
       if (payload.digit === "0" && state.currOperand === "0") {
         return state
       }
@@ -68,6 +78,7 @@ function reducer(state, { type, payload }) {      // ...state = object/property
 
       return {
         ...state,
+        overwrite: true,    // this line is to overwrite the ouput after hit = button
         prevOperand: null,
         operation: null,
         currOperand: evaluate(state)
