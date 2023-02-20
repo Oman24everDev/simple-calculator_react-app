@@ -136,6 +136,21 @@ function evaluate({ currOperand, prevOperand, operation }) {
   return computation.toString()
 }
 
+// this const variable is to declare the number format of what value it is in comma
+const INTEGER_FORMATTER = new Intl.NumberFormat("en-us", {
+  maximumFractionDigits: 0
+})
+
+function formatOperand(operand) {
+  // this if statement is for digit is set the decimal into any input value or null if nothing  
+  if (operand == null) return
+  const [integer, decimal] = operand.split('.')
+
+  // this if statement is for the identify/separate the ouput with comma & concat with decimal
+  if (decimal == null ) return INTEGER_FORMATTER.format(integer)
+  return `${INTEGER_FORMATTER.format(integer)}.${decimal}`
+}
+
 function App() {
 
   // this array of variables will be passed on divs or dispatch
@@ -144,8 +159,8 @@ function App() {
   return (
     <div className="calculator-grid">
       <div className="output">
-        <div className="prev-operand"> {prevOperand} {operation}</div> 
-        <div className="curr-operand">{currOperand}</div>
+        <div className="prev-operand"> {formatOperand(prevOperand)} {operation}</div> 
+        <div className="curr-operand">{formatOperand(currOperand)}</div>
       </div>
       <button className="span-two" onClick={() => dispatch({ type: ACTIONS.CLEAR })}>AC</button>
       <button onClick={() => dispatch({ type: ACTIONS.DELETE_DIGIT })}>DEL</button>
