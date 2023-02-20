@@ -12,8 +12,9 @@ export const ACTIONS = {
   EVALUATE: 'evaluate'
 }
 
-function reducer(state, { type, payload }) {      // ...state = object
+function reducer(state, { type, payload }) {      // ...state = object/property
   switch(type) {
+
     case ACTIONS.ADD_DIGIT:
       if (payload.digit === "0" && state.currOperand === "0") {
         return state
@@ -26,11 +27,11 @@ function reducer(state, { type, payload }) {      // ...state = object
         ...state,
         currOperand: `${state.currOperand || ""}${payload.digit}`,
       }
+
     case ACTIONS.CHOOSE_OPERATION:
       if (state.currOperand == null && state.prevOperand == null){
         return state
       }
-
       // this if statement is for overwrite the operation if hit button is wrong
       if (state.currOperand == null){
         return {
@@ -38,7 +39,6 @@ function reducer(state, { type, payload }) {      // ...state = object
           operation: payload.operation
         }
       }
-      
       if (state.prevOperand == null ) {
         return {
           ...state,
@@ -54,8 +54,23 @@ function reducer(state, { type, payload }) {      // ...state = object
         operation: payload.operation,
         currOperand: null
       }
+
     case ACTIONS.CLEAR:
       return {}
+
+    // this case action is for = & after hit the = button it returns into current state output
+    case ACTIONS.EVALUATE:
+      if (state.operation == null || state.currOperand == null || state.prevOperand == null) {
+        return state
+      }
+
+      return {
+        ...state,
+        prevOperand: null,
+        operation: null,
+        currOperand: evaluate(state)
+      }
+
   }
 }
 
@@ -120,7 +135,7 @@ function App() {
 
       <DigitButton digit="." dispatch={dispatch}/>
       <DigitButton digit="0" dispatch={dispatch}/>
-      <button className="span-two">=</button>
+      <button className="span-two" onClick={() => dispatch({ type: ACTIONS.EVALUATE })}> =</button>
 
 
     
