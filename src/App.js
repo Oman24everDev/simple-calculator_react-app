@@ -12,7 +12,7 @@ export const ACTIONS = {
   EVALUATE: 'evaluate'
 }
 
-function reducer(state, { type, payload }) {
+function reducer(state, { type, payload }) {      // ...state = object
   switch(type) {
     case ACTIONS.ADD_DIGIT:
       if (payload.digit === "0" && state.currOperand === "0") {
@@ -30,8 +30,16 @@ function reducer(state, { type, payload }) {
       if (state.currOperand == null && state.prevOperand == null){
         return state
       }
+
+      // this if statement is for overwrite the operation if hit button is wrong
+      if (state.currOperand == null){
+        return {
+          ...state,
+          operation: payload.operation
+        }
+      }
       
-      if(state.prevOperand == null ) {
+      if (state.prevOperand == null ) {
         return {
           ...state,
           operation: payload.operation,
