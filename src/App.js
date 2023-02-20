@@ -27,6 +27,7 @@ function reducer(state, { type, payload }) {      // ...state = object/property
         }
       }
 
+      // this if statement is for digits & validations to limit the 0 or . for not duplicating
       if (payload.digit === "0" && state.currOperand === "0") {
         return state
       }
