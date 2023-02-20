@@ -21,11 +21,18 @@ function reducer(state, { type, payload }) {
       if (payload.digit === "." && state.currOperand.includes (".")) {
         return state
       }
-      
+
       return {
         ...state,
         currOperand: `${state.currOperand || ""}${payload.digit}`,
       }
+    case ACTIONS.CHOOSE_OPERATION:
+      if (state.currOperand == null && state.prevOperand == null){
+        return state
+      }
+      
+    case ACTIONS.CLEAR:
+      return {}
   }
 }
 
@@ -40,7 +47,7 @@ function App() {
         <div className="prev-operand"> {prevOperand} {operation}</div> 
         <div className="curr-operand">{currOperand}</div>
       </div>
-      <button className="span-two">AC</button>
+      <button className="span-two" onClick={() => dispatch({ type: ACTIONS.CLEAR })}>AC</button>
       <button>DEL</button>
 
       <OperationButton operation="÷" dispatch={dispatch}/>
