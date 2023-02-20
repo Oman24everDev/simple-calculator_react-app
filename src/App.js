@@ -15,6 +15,7 @@ export const ACTIONS = {
 function reducer(state, { type, payload }) {      // ...state = object/property
   switch(type) {
 
+    // this case action is for concat the digits & validations to limit the 0 or . for not duplicating
     case ACTIONS.ADD_DIGIT:
       if (payload.digit === "0" && state.currOperand === "0") {
         return state
@@ -27,7 +28,8 @@ function reducer(state, { type, payload }) {      // ...state = object/property
         ...state,
         currOperand: `${state.currOperand || ""}${payload.digit}`,
       }
-
+    
+    // this case action is for choosing the operator 
     case ACTIONS.CHOOSE_OPERATION:
       if (state.currOperand == null && state.prevOperand == null){
         return state
@@ -39,6 +41,7 @@ function reducer(state, { type, payload }) {      // ...state = object/property
           operation: payload.operation
         }
       }
+      // this if statement is to change the state ouput after hit the operator or evaluate
       if (state.prevOperand == null ) {
         return {
           ...state,
@@ -47,7 +50,6 @@ function reducer(state, { type, payload }) {      // ...state = object/property
           currOperand: null
         }
       }
-
       return {
         ...state,
         prevOperand: evaluate(state),
