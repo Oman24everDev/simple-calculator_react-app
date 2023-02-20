@@ -33,6 +33,7 @@ function App() {
       </div>
       <button className="span-two">AC</button>
       <button>DEL</button>
+
       <DigitButton digit="÷" dispatch={dispatch}/>
 
       <button>1</button>
