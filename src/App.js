@@ -39,9 +39,41 @@ function reducer(state, { type, payload }) {
           currOperand: null
         }
       }
+
+      return {
+        ...state,
+        prevOperand: evaluate(state),
+        operation: payload.operation,
+        currOperand: null
+      }
     case ACTIONS.CLEAR:
       return {}
   }
+}
+
+// this function is convert strings to actual numbers
+// you can add/subtract etc again with the previous state 
+function evaluate({ currOperand, prevOperand, operation }) {
+  const prev = parseFloat(prevOperand)
+  const curr = parseFloat(currOperand)
+
+  if (isNaN(prev) || isNaN(curr)) return ""
+  let computation = ""
+  switch (operation) {
+    case "+":
+      computation = prev + curr
+      break
+    case "-":
+      computation = prev - curr
+      break
+    case "*":
+      computation = prev * curr
+      break
+    case "÷":
+      computation = prev / curr
+      break
+  }
+  return computation.toString()
 }
 
 function App() {
