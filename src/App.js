@@ -70,6 +70,29 @@ function reducer(state, { type, payload }) {      // ...state = object/property
 
     case ACTIONS.CLEAR:
       return {}
+    
+    case ACTIONS.DELETE_DIGIT:
+      // this if statement is for clearing the ouput if it is from = button overwrite
+      if (state.overwrite) {
+        return {
+          ...state,
+          overwrite: false,
+          currOperand: null
+        }
+      }
+
+      // this if statement if for delete the value of output & remove last digit 
+      if (state.currOperand == null) return state
+      if (state.currOperand.length === 1) {
+        return {
+          ...state,
+          currOperand: null
+        }
+      }
+      return {
+        ...state,
+        currOperand: state.currOperand.slice(0, -1)
+      }
 
     // this case action is for = & after hit the = button it returns into current state output
     case ACTIONS.EVALUATE:
@@ -125,7 +148,7 @@ function App() {
         <div className="curr-operand">{currOperand}</div>
       </div>
       <button className="span-two" onClick={() => dispatch({ type: ACTIONS.CLEAR })}>AC</button>
-      <button>DEL</button>
+      <button onClick={() => dispatch({ type: ACTIONS.DELETE_DIGIT })}>DEL</button>
 
       <OperationButton operation="÷" dispatch={dispatch}/>
 
